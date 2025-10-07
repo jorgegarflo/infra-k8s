@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proyecto-deployment
+  namespace: proyecto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proyecto-deployment
+  template:
+    metadata:
+      labels:
+        app: proyecto-deployment
+    spec:
+      containers:
+        - name: app
+          # image: jgarciafl/proyecto:0.0.1
+          image: ghcr.io/jorgegarflo/proyecto:main
+          env:           
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: proyecto-secreto
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: proyecto-secreto
+                  key: POSTGRES_DB
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: proyecto-secreto
+                  key: POSTGRES_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: proyecto-secreto
+                  key: POSTGRES_PASSWORD
+            - name: APP_VERSION
+              valueFrom:
+                secretKeyRef:
+                  name: proyecto-secreto
+                  key: APP_VERSION
+        # - name: db
+        #   image: postgres          
+        #   env:           
+        #     - name: POSTGRES_DB
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: proyecto-secreto
+        #           key: POSTGRES_DB
+        #     - name: POSTGRES_USER
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: proyecto-secreto
+        #           key: POSTGRES_USER
+        #     - name: POSTGRES_PASSWORD
+        #       valueFrom:
+        #         secretKeyRef:
+        #           name: proyecto-secreto
+        #           key: POSTGRES_PASSWORD

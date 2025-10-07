@@ -1,0 +1,8 @@
+aapiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: proyecto-deployment
+  namespace: flux-system
+spec:
+  image: ghcr.io/jorgegarflo/proyecto
+  interval: 1m

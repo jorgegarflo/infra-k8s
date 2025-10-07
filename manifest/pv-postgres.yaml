@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-postgres
+  namespace: proyecto
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/kind-volumes/postgres
+  storageClassName: standard
+  persistentVolumeReclaimPolicy: Retain
